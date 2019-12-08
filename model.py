@@ -28,7 +28,8 @@ import torch.nn as nn
 ## batchnorm 삭제 .. 걸린 시간 : 6m14s, acc : 4026 / 5000
 ## 흠그냥conv layer 3개 넣고 fc layer 3개 넣고 1 epoch .. 걸린 시간 : 3m39s, acc : 2342 / 5000
 ##cnn 풀력 16, 32 인데 두 번째는 kernel size 3, fc 출력 120 , 50, 2 epoch .. 걸린 시간 : 6m13s, acc : 4625 / 5000, lr = 0.0001
-##위에랑 똑같은데 fc out 을 150 / 50 으로 바꿔보기
+##위에랑 똑같은데 fc out 을 150 / 50 으로 바꿔보기 .. 걸린 시간 : 6m19s , acc : 4602 / 5000
+##그럼 fc layer 를 바로 50으로 뽑기
 
 class convnet(nn.Module):
     def __init__(self):
@@ -54,7 +55,7 @@ class convnet(nn.Module):
 #             nn.MaxPool2d(2)
 #         )
         self.layer4 = nn.Sequential(
-            nn.Linear( 6 * 6 * 32, 150),
+            nn.Linear( 6 * 6 * 32, 50),
             nn.ReLU()
         )
 #         self.layer5 = nn.Sequential(
@@ -73,4 +74,5 @@ class convnet(nn.Module):
         x = x.view(-1, 6 * 6 * 32)
         x = self.layer4(x)
 #         x = self.layer5(x)
-        return self.layer6(x)
+#         return self.layer6(x)
+        return x
