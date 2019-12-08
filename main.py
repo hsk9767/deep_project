@@ -32,9 +32,12 @@ for epoch in range(num_epochs):
         # Assign Tensors to Configured Device
         images = images.to(device) # reshape dimensions of the input images to fit model
         labels = labels.to(device)
+        
+        print("image shape : ", images.shape)
 
         # Forward Propagation
         outputs = model(images)
+        print("output shape : ", outputs.shape)
 
         # Get Loss, Compute Gradient, Update Parameters
         loss = criterion(outputs, labels)
