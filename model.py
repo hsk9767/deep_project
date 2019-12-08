@@ -19,7 +19,8 @@ import torch.nn as nn
 ##Normalize 를 통해 -1 ~ 1 의 image 로 바꾸고 진행. -> 5m31s , 4315 / 5000
 ##Normalize 유지해주고 layer1 out 을 12으로 layer2 out 을 24로, weight_decay 추가 ->걸린 시간 : 5m13s, acc : 4114 / 5000
 ##다시 그럼 16,32 출력을 유지하고 fc layer 의 출력을 100 , 50 으로 바꾼다. -> 7분 15초;;
-##그 전에 16, 32 가 반영 안 됐을 수도 있다. 일단 확 낮춰서 CNN : 10, 20  / FC : 100 , 50을 출력으로 해 본다.
+##그 전에 16, 32 가 반영 안 됐을 수도 있다. 일단 확 낮춰서 CNN : 10, 20  / FC : 100 , 50을 출력으로 해 본다. 0> 7분 13초;;
+##Normalize 를 버리고 CNN 출력 10,20, FC : 150,50 으로
 
 class convnet(nn.Module):
     def __init__(self):
@@ -45,7 +46,7 @@ class convnet(nn.Module):
         #     nn.MaxPool2d(2)
         # )
         self.layer4 = nn.Sequential(
-            nn.Linear( 5 * 5 * 20, 100),
+            nn.Linear( 5 * 5 * 20, 150),
             nn.ReLU()
         )
         # self.layer5 = nn.Sequential(
@@ -54,7 +55,7 @@ class convnet(nn.Module):
         # )
         self.layer6 = nn.Sequential(
             # nn.Dropout(0.3),
-            nn.Linear(100, 50)
+            nn.Linear(150, 50)
         )
 
     def forward(self, x):
