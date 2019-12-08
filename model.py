@@ -18,14 +18,15 @@ import torch.nn as nn
 ##edge 는 버리고 패딩을 없애봄. 어차피 이미지 경계부분이 중요한 것은 아니니까. 또한, 첫 번째 출력의 depth 를 16, 두 번째 출력의 depth 를 32 -> 4136 / 5000 , 5m 15s
 ##Normalize 를 통해 -1 ~ 1 의 image 로 바꾸고 진행. -> 5m31s , 4315 / 5000
 ##Normalize 유지해주고 layer1 out 을 12으로 layer2 out 을 24로, weight_decay 추가 ->걸린 시간 : 5m13s, acc : 4114 / 5000
-##다시 그럼 16,32 출력을 유지하고 fc layer 의 출력을 100 , 50 으로 바꾼다.
+##다시 그럼 16,32 출력을 유지하고 fc layer 의 출력을 100 , 50 으로 바꾼다. -> 7분 15초;;
+##그 전에 16, 32 가 반영 안 됐을 수도 있다. 일단 확 낮춰서 CNN : 10, 20  / FC : 100 , 50을 출력으로 해 본다.
 
 class convnet(nn.Module):
     def __init__(self):
         super().__init__()
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
-            nn.Conv2d(1,16,5, stride = 1),
+            nn.Conv2d(1,10,5, stride = 1),
             nn.BatchNorm2d(10),
             nn.ReLU(),
             nn.MaxPool2d(2)
@@ -33,7 +34,7 @@ class convnet(nn.Module):
         self.layer2 = nn.Sequential(
             # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
             nn.Conv2d(10, 20, 5, stride = 1),
-            nn.BatchNorm2d(32),
+            nn.BatchNorm2d(20),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
