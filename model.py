@@ -24,7 +24,8 @@ import torch.nn as nn
 ##그러면 다시 fc layer 를 120 으로 cnn 출력 16,32 으로 해봄. -> 근데 또 7분 14초..;;;
 ##batch :  10, 다시 Normalize 부활 -> 걸린 시간 : 4m6s, acc : 3647 / 5000
 ##그럼 batch 를 5 로 하고 lr 을 0.005로 높여 보겠음.  걸린 시간 : 4m23s, acc : 3319 / 5000
-## batch 1로 하고 lr 을 0.001 로 다시 낮춰 보겠음..
+## batch 1로 하고 lr 을 0.001 로 다시 낮춰 보겠음..걸린 시간 : 7m6s, acc : 4033 / 5000
+## batchnorm 삭제
 
 class convnet(nn.Module):
     def __init__(self):
@@ -32,14 +33,14 @@ class convnet(nn.Module):
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
             nn.Conv2d(1,16,5, stride = 1),
-            nn.BatchNorm2d(16),
+#             nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
         self.layer2 = nn.Sequential(
             # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
             nn.Conv2d(16, 32, 5, stride = 1),
-            nn.BatchNorm2d(32),
+#             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
