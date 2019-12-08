@@ -29,7 +29,7 @@ import torch.nn as nn
 ## 흠그냥conv layer 3개 넣고 fc layer 3개 넣고 1 epoch .. 걸린 시간 : 3m39s, acc : 2342 / 5000
 ##cnn 풀력 16, 32 인데 두 번째는 kernel size 3, fc 출력 120 , 50, 2 epoch .. 걸린 시간 : 6m13s, acc : 4625 / 5000, lr = 0.0001
 ##위에랑 똑같은데 fc out 을 150 / 50 으로 바꿔보기 .. 걸린 시간 : 6m19s , acc : 4602 / 5000
-##그럼 fc layer 를 바로 50으로 뽑기
+##그럼 fc layer 를 바로 50으로 뽑기 -> bottleneck 현상으로 underfit
 
 class convnet(nn.Module):
     def __init__(self):
