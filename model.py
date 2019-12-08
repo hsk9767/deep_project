@@ -26,7 +26,8 @@ import torch.nn as nn
 ##그럼 batch 를 5 로 하고 lr 을 0.005로 높여 보겠음.  걸린 시간 : 4m23s, acc : 3319 / 5000
 ## batch 1로 하고 lr 을 0.001 로 다시 낮춰 보겠음..걸린 시간 : 7m6s, acc : 4033 / 5000
 ## batchnorm 삭제 .. 걸린 시간 : 6m14s, acc : 4026 / 5000
-## 흠그냥conv layer 3개 넣고 fc layer 3개 넣고 1 epoch .. 
+## 흠그냥conv layer 3개 넣고 fc layer 3개 넣고 1 epoch .. 걸린 시간 : 3m39s, acc : 2342 / 5000
+##cnn 풀력 16, 32 인데 두 번째는 kernel size 3, fc 출력 120 , 50, 2 epoch .. 
 
 class convnet(nn.Module):
     def __init__(self):
@@ -40,35 +41,35 @@ class convnet(nn.Module):
         )
         self.layer2 = nn.Sequential(
             # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
-            nn.Conv2d(16, 32, 5, stride = 1),
+            nn.Conv2d(16, 32, 3, stride = 1),
 #             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
-        self.layer3 = nn.Sequential(
-            nn.Conv2d(32, 64, 3, stride = 1),
+#         self.layer3 = nn.Sequential(
+#             nn.Conv2d(32, 64, 3, stride = 1),
 #             nn.BatchNorm2d(32),
-            nn.ReLU(),
-            nn.MaxPool2d(2)
-        )
+#             nn.ReLU(),
+#             nn.MaxPool2d(2)
+#         )
         self.layer4 = nn.Sequential(
-            nn.Linear( 1 * 1 * 64, 150),
+            nn.Linear( 6 * 6 * 32, 120),
             nn.ReLU()
         )
-        self.layer5 = nn.Sequential(
-            nn.Linear(150, 100),
-            nn.ReLU()
-        )
+#         self.layer5 = nn.Sequential(
+#             nn.Linear(150, 100),
+#             nn.ReLU()
+#         )
         self.layer6 = nn.Sequential(
             # nn.Dropout(0.3),
-            nn.Linear(100, 50)
+            nn.Linear(120, 50)
         )
 
     def forward(self, x):
         x = self.layer1(x)
         x = self.layer2(x)
         x = self.layer3(x)
-        x = x.view(-1, 1 * 1 * 64)
+        x = x.view(-1, 6 * 6 * 32)
         x = self.layer4(x)
         x = self.layer5(x)
         return self.layer6(x)
