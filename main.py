@@ -14,19 +14,16 @@ val_dir = './npy_val'
 train_dataset = FontDataset(train_dir)
 val_dataset = FontDataset(val_dir)
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
-                                           batch_size=5, shuffle=True)
+                                           batch_size=1, shuffle=True)
 
 val_loader = torch.utils.data.DataLoader(dataset=val_dataset,
                                          batch_size=1)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = convnet().to(device)
-for name,param in model.named_parameters():
-  print(name)
-  print(param)
 
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.005, weight_decay = 1e-5)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay = 1e-5)
 
 num_epochs = 2
 
