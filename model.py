@@ -20,22 +20,23 @@ import torch.nn as nn
 ##Normalize 유지해주고 layer1 out 을 12으로 layer2 out 을 24로, weight_decay 추가 ->걸린 시간 : 5m13s, acc : 4114 / 5000
 ##다시 그럼 16,32 출력을 유지하고 fc layer 의 출력을 100 , 50 으로 바꾼다. -> 7분 15초;;
 ##그 전에 16, 32 가 반영 안 됐을 수도 있다. 일단 확 낮춰서 CNN : 10, 20  / FC : 100 , 50을 출력으로 해 본다. 0> 7분 13초;;
-##Normalize 를 버리고 CNN 출력 10,20, FC : 150,50 으로
+##Normalize 를 버리고 CNN 출력 10,20, FC : 150,50 으로 -> 근데도 7분 11초..?...
+##그러면 다시 fc layer 를 120 으로 cnn 출력 16,32 으로 해봄.
 
 class convnet(nn.Module):
     def __init__(self):
         super().__init__()
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
-            nn.Conv2d(1,10,5, stride = 1),
-            nn.BatchNorm2d(10),
+            nn.Conv2d(1,16,5, stride = 1),
+            nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
         self.layer2 = nn.Sequential(
             # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
-            nn.Conv2d(10, 20, 5, stride = 1),
-            nn.BatchNorm2d(20),
+            nn.Conv2d(16, 32, 5, stride = 1),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
@@ -46,7 +47,7 @@ class convnet(nn.Module):
         #     nn.MaxPool2d(2)
         # )
         self.layer4 = nn.Sequential(
-            nn.Linear( 5 * 5 * 20, 150),
+            nn.Linear( 5 * 5 * 32, 120),
             nn.ReLU()
         )
         # self.layer5 = nn.Sequential(
@@ -55,14 +56,14 @@ class convnet(nn.Module):
         # )
         self.layer6 = nn.Sequential(
             # nn.Dropout(0.3),
-            nn.Linear(150, 50)
+            nn.Linear(120, 50)
         )
 
     def forward(self, x):
         x = self.layer1(x)
         x = self.layer2(x)
         # x = self.layer3(x)
-        x = x.view(-1, 5 * 5 * 20)
+        x = x.view(-1, 5 * 5 * 32)
         x = self.layer4(x)
         # x = self.layer5(x)
         return self.layer6(x)
