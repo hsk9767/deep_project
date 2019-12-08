@@ -23,6 +23,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = convnet().to(device)
 for name,param in model.named_parameters():
   print(name)
+  print(param)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.005, weight_decay = 1e-5)
