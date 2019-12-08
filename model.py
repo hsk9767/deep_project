@@ -68,8 +68,8 @@ class convnet(nn.Module):
     def forward(self, x):
         x = self.layer1(x)
         x = self.layer2(x)
-        x = self.layer3(x)
+#         x = self.layer3(x)
         x = x.view(-1, 6 * 6 * 32)
         x = self.layer4(x)
-        x = self.layer5(x)
+#         x = self.layer5(x)
         return self.layer6(x)
