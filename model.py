@@ -22,7 +22,8 @@ import torch.nn as nn
 ##그 전에 16, 32 가 반영 안 됐을 수도 있다. 일단 확 낮춰서 CNN : 10, 20  / FC : 100 , 50을 출력으로 해 본다. 0> 7분 13초;;
 ##Normalize 를 버리고 CNN 출력 10,20, FC : 150,50 으로 -> 근데도 7분 11초..?...
 ##그러면 다시 fc layer 를 120 으로 cnn 출력 16,32 으로 해봄. -> 근데 또 7분 14초..;;;
-##batch :  10, 다시 Normalize 부활 
+##batch :  10, 다시 Normalize 부활 -> 걸린 시간 : 4m6s, acc : 3647 / 5000
+##그럼 batch 를 5 로 하고 lr 을 0.05로 높여 보겠음.
 
 class convnet(nn.Module):
     def __init__(self):
