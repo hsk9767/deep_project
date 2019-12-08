@@ -27,7 +27,8 @@ import torch.nn as nn
 ## batch 1로 하고 lr 을 0.001 로 다시 낮춰 보겠음..걸린 시간 : 7m6s, acc : 4033 / 5000
 ## batchnorm 삭제 .. 걸린 시간 : 6m14s, acc : 4026 / 5000
 ## 흠그냥conv layer 3개 넣고 fc layer 3개 넣고 1 epoch .. 걸린 시간 : 3m39s, acc : 2342 / 5000
-##cnn 풀력 16, 32 인데 두 번째는 kernel size 3, fc 출력 120 , 50, 2 epoch .. 
+##cnn 풀력 16, 32 인데 두 번째는 kernel size 3, fc 출력 120 , 50, 2 epoch .. 걸린 시간 : 6m13s, acc : 4625 / 5000, lr = 0.0001
+##위에랑 똑같은데 fc out 을 150 / 50 으로 바꿔보기
 
 class convnet(nn.Module):
     def __init__(self):
@@ -53,7 +54,7 @@ class convnet(nn.Module):
 #             nn.MaxPool2d(2)
 #         )
         self.layer4 = nn.Sequential(
-            nn.Linear( 6 * 6 * 32, 120),
+            nn.Linear( 6 * 6 * 32, 150),
             nn.ReLU()
         )
 #         self.layer5 = nn.Sequential(
@@ -62,7 +63,7 @@ class convnet(nn.Module):
 #         )
         self.layer6 = nn.Sequential(
             # nn.Dropout(0.3),
-            nn.Linear(120, 50)
+            nn.Linear(150, 50)
         )
 
     def forward(self, x):
