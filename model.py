@@ -26,13 +26,13 @@ class convnet(nn.Module):
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
             nn.Conv2d(1,16,5, stride = 1),
-            nn.BatchNorm2d(16),
+            nn.BatchNorm2d(10),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
         self.layer2 = nn.Sequential(
             # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
-            nn.Conv2d(16, 32, 5, stride = 1),
+            nn.Conv2d(10, 20, 5, stride = 1),
             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2)
@@ -44,7 +44,7 @@ class convnet(nn.Module):
         #     nn.MaxPool2d(2)
         # )
         self.layer4 = nn.Sequential(
-            nn.Linear( 5 * 5 * 32, 100),
+            nn.Linear( 5 * 5 * 20, 100),
             nn.ReLU()
         )
         # self.layer5 = nn.Sequential(
@@ -60,7 +60,7 @@ class convnet(nn.Module):
         x = self.layer1(x)
         x = self.layer2(x)
         # x = self.layer3(x)
-        x = x.view(-1, 5 * 5 * 32)
+        x = x.view(-1, 5 * 5 * 20)
         x = self.layer4(x)
         # x = self.layer5(x)
         return self.layer6(x)
