@@ -52,7 +52,7 @@ class convnet(nn.Module):
         )
         self.layer2 = nn.Sequential(
             nn.Linear( 14 * 14 * 64, 2048),
-            nn.ReLU()
+            nn.ReLU(),
             nn.Linear(2048, 50)
 #         )
 # #         self.layer3 = nn.Sequential(
