@@ -46,39 +46,35 @@ class convnet(nn.Module):
 #             nn.BatchNorm2d(16),
             nn.ReLU(),
 #             nn.MaxPool2d(2)
-        )
-        self.layer2 = nn.Sequential(
-            # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
             nn.Conv2d(64, 64, 3, stride = 1),
-#             nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
-#         self.layer3 = nn.Sequential(
-#             nn.Conv2d(32, 64, 3, stride = 1),
-#             nn.BatchNorm2d(32),
-#             nn.ReLU(),
-#             nn.MaxPool2d(2)
-#         )
-        self.layer4 = nn.Sequential(
+        self.layer2 = nn.Sequential(
             nn.Linear( 13 * 13 * 64, 2048),
             nn.ReLU()
-        )
-#         self.layer5 = nn.Sequential(
-#             nn.Linear(150, 100),
-#             nn.ReLU()
-#         )
-        self.layer6 = nn.Sequential(
-            # nn.Dropout(0.3),
             nn.Linear(2048, 50)
-        )
+#         )
+# #         self.layer3 = nn.Sequential(
+# #             nn.Conv2d(32, 64, 3, stride = 1),
+# #             nn.BatchNorm2d(32),
+# #             nn.ReLU(),
+# #             nn.MaxPool2d(2)
+# #         )
+#         self.layer4 = nn.Sequential(
+            
+#         )
+# #         self.layer5 = nn.Sequential(
+# #             nn.Linear(150, 100),
+# #             nn.ReLU()
+# #         )
+#         self.layer6 = nn.Sequential(
+#             # nn.Dropout(0.3),
+            
+#         )
 
     def forward(self, x):
         x = self.layer1(x)
-        x = self.layer2(x)
-#         x = self.layer3(x)
         x = x.view(-1, 13 * 13 * 64)
-        x = self.layer4(x)
-#         x = self.layer5(x)
-        return self.layer6(x)
+        return self.layer2(x)
 
