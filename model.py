@@ -54,7 +54,7 @@ class convnet(nn.Module):
             nn.Linear( 14 * 14 * 64, 2048),
             nn.ReLU(),
             nn.Linear(2048, 50)
-#         )
+        )
 # #         self.layer3 = nn.Sequential(
 # #             nn.Conv2d(32, 64, 3, stride = 1),
 # #             nn.BatchNorm2d(32),
