@@ -75,6 +75,6 @@ class convnet(nn.Module):
 
     def forward(self, x):
         x = self.layer1(x)
-        x = x.view(-1, 14 * 14 * 64)
+        x = x.view(-1, 13 * 13 * 64)
         return self.layer2(x)
 
