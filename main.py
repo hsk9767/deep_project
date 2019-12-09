@@ -43,7 +43,7 @@ for epoch in range(num_epochs):
         loss.backward()
         optimizer.step()
         
-        losses.append(loss)
+        losses.append(loss.item())
 
         if i%50 == 0:
             print(f"loss for {i} : {loss}")
