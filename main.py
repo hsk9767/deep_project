@@ -47,11 +47,12 @@ for epoch in range(num_epochs):
 
         if i%50 == 0:
             print(f"loss for {i} : {loss}")
-        duration = end - start
-        print("걸린 시간 : {}m{}s".format(int(duration//60), int(duration%60)))
+        
         
 
 end = time.time()
+duration = end - start
+print("걸린 시간 : {}m{}s".format(int(duration//60), int(duration%60)))
 plt.plot(losses)
 
 # Test after Training is done
