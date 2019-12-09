@@ -35,14 +35,14 @@ import torch.nn as nn
 ##위랑 동일, batch norm 없애기 -> 걸린 시간 : 4m51s , acc : 4752 / 5000
 ##위랑 동일한데 cnn 출력을 (32, 32) 로 해보기 -> 걸린 시간 : 4m47s, acc : 4815 / 5000
 ##위랑 동일한데 cnn 출력을 (64, 64) 로 해보기 ->걸린 시간 : 4m45s, acc : 4862 / 5000
-##fc 출력을 4096 으로.
+## cnn kernel 을 모두 3 size 로.
 
 class convnet(nn.Module):
     def __init__(self):
         super().__init__()
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
-            nn.Conv2d(1,64,5, stride = 1),
+            nn.Conv2d(1,64,3, stride = 1),
 #             nn.BatchNorm2d(16),
             nn.ReLU(),
 #             nn.MaxPool2d(2)
@@ -51,7 +51,7 @@ class convnet(nn.Module):
             nn.MaxPool2d(2)
         )
         self.layer2 = nn.Sequential(
-            nn.Linear( 13 * 13 * 64, 2048),
+            nn.Linear( 14 * 14 * 64, 2048),
             nn.ReLU()
             nn.Linear(2048, 50)
 #         )
@@ -75,6 +75,6 @@ class convnet(nn.Module):
 
     def forward(self, x):
         x = self.layer1(x)
-        x = x.view(-1, 13 * 13 * 64)
+        x = x.view(-1, 14 * 14 * 64)
         return self.layer2(x)
 
