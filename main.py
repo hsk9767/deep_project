@@ -1,6 +1,7 @@
 import torch
 import time
 import torch.nn as nn
+import matplotlib.pyplot as plt
 from model import convnet
 from font_dataset import FontDataset
 
@@ -26,7 +27,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001, weight_decay = 1e-5)
 
 num_epochs = 2
-
+losses = []
 for epoch in range(num_epochs):
     for i, (images, labels) in enumerate(train_loader):
         # Assign Tensors to Configured Device
@@ -41,11 +42,14 @@ for epoch in range(num_epochs):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+        
+        losses.append(loss)
 
         if i%50 == 0:
             print(f"loss for {i} : {loss}")
 
 end = time.time()
+plt.plot(losses)
 duration = end - start
 print("걸린 시간 : {}m{}s".format(int(duration//60), int(duration%60)))
 
