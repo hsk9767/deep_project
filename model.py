@@ -39,6 +39,7 @@ import torch.nn as nn
 ## 97%나오던거 batch 5 로 하니까 걸린 시간 : 3m57s, acc : 0.9374 % 
 ## batch normalization 추가해 보겠음. 걸린 시간 : 3m57s, acc : 0.9384 %
 ##batch size 를 3으로 해 보겠음. 걸린 시간 : 4m28s , acc : 0.936 %
+##10 epoch, 100 batch ->
 
 class convnet(nn.Module):
     def __init__(self):
