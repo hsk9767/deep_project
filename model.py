@@ -32,21 +32,22 @@ import torch.nn as nn
 ##그럼 fc layer 를 바로 50으로 뽑기 -> bottleneck 현상으로 underfit
 ##12.08
 ##CNN (16,16) -> 2번째 cnn 에서만 maxpooling , 두 번째 kernel만 size  3, fc layer 는 (2048, 50) , normalize 반전은 유지, lr = 0.0001, decay = 1e-5 -> 걸린 시간 : 5m27s, acc : 4659 / 5000
-##위랑 동일, batch norm 없애기
+##위랑 동일, batch norm 없애기 -> 걸린 시간 : 4m51s , acc : 4752 / 5000
+##위랑 동일한데 cnn 출력을 (32, 32) 로 해보기
 
 class convnet(nn.Module):
     def __init__(self):
         super().__init__()
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
-            nn.Conv2d(1,16,5, stride = 1),
+            nn.Conv2d(1,32,5, stride = 1),
 #             nn.BatchNorm2d(16),
             nn.ReLU(),
 #             nn.MaxPool2d(2)
         )
         self.layer2 = nn.Sequential(
             # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
-            nn.Conv2d(16, 16, 3, stride = 1),
+            nn.Conv2d(16, 32, 3, stride = 1),
 #             nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.MaxPool2d(2)
@@ -58,7 +59,7 @@ class convnet(nn.Module):
 #             nn.MaxPool2d(2)
 #         )
         self.layer4 = nn.Sequential(
-            nn.Linear( 13 * 13 * 16, 2048),
+            nn.Linear( 13 * 13 * 32, 2048),
             nn.ReLU()
         )
 #         self.layer5 = nn.Sequential(
