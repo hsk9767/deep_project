@@ -34,7 +34,8 @@ import torch.nn as nn
 ##CNN (16,16) -> 2번째 cnn 에서만 maxpooling , 두 번째 kernel만 size  3, fc layer 는 (2048, 50) , normalize 반전은 유지, lr = 0.0001, decay = 1e-5 -> 걸린 시간 : 5m27s, acc : 4659 / 5000
 ##위랑 동일, batch norm 없애기 -> 걸린 시간 : 4m51s , acc : 4752 / 5000
 ##위랑 동일한데 cnn 출력을 (32, 32) 로 해보기 -> 걸린 시간 : 4m47s, acc : 4815 / 5000
-##위랑 동일한데 cnn 출력을 (64, 64) 로 해보기 ->
+##위랑 동일한데 cnn 출력을 (64, 64) 로 해보기 ->걸린 시간 : 4m45s, acc : 4862 / 5000
+##fc 출력을 4096 으로.
 
 class convnet(nn.Module):
     def __init__(self):
@@ -60,7 +61,7 @@ class convnet(nn.Module):
 #             nn.MaxPool2d(2)
 #         )
         self.layer4 = nn.Sequential(
-            nn.Linear( 13 * 13 * 64, 2048),
+            nn.Linear( 13 * 13 * 64, 4096),
             nn.ReLU()
         )
 #         self.layer5 = nn.Sequential(
@@ -69,7 +70,7 @@ class convnet(nn.Module):
 #         )
         self.layer6 = nn.Sequential(
             # nn.Dropout(0.3),
-            nn.Linear(2048, 50)
+            nn.Linear(4096, 50)
         )
 
     def forward(self, x):
