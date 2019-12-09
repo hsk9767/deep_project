@@ -37,7 +37,8 @@ import torch.nn as nn
 ##위랑 동일한데 cnn 출력을 (64, 64) 로 해보기 ->걸린 시간 : 4m45s, acc : 4862 / 5000
 ## cnn kernel 을 모두 3 size 로. -> 7m33s, acc : 96.6%
 ## 97%나오던거 batch 5 로 하니까 걸린 시간 : 3m57s, acc : 0.9374 % 
-## batch normalization 추가해 보겠음.
+## batch normalization 추가해 보겠음. 걸린 시간 : 3m57s, acc : 0.9384 %
+##batch size 를 3으로 해 보겠음.
 
 class convnet(nn.Module):
     def __init__(self):
