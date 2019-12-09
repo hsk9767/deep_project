@@ -31,7 +31,8 @@ import torch.nn as nn
 ##위에랑 똑같은데 fc out 을 150 / 50 으로 바꿔보기 .. 걸린 시간 : 6m19s , acc : 4602 / 5000
 ##그럼 fc layer 를 바로 50으로 뽑기 -> bottleneck 현상으로 underfit
 ##12.08
-##CNN (16,16) -> 2번째 cnn 에서만 maxpooling , 두 번째 kernel만 size  3, fc layer 는 (2048, 50) , normalize 반전은 유지, lr = 0.0001, decay = 1e-5 ->
+##CNN (16,16) -> 2번째 cnn 에서만 maxpooling , 두 번째 kernel만 size  3, fc layer 는 (2048, 50) , normalize 반전은 유지, lr = 0.0001, decay = 1e-5 -> 걸린 시간 : 5m27s, acc : 4659 / 5000
+##위랑 동일, batch norm 없애기
 
 class convnet(nn.Module):
     def __init__(self):
@@ -39,14 +40,14 @@ class convnet(nn.Module):
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
             nn.Conv2d(1,16,5, stride = 1),
-            nn.BatchNorm2d(16),
+#             nn.BatchNorm2d(16),
             nn.ReLU(),
 #             nn.MaxPool2d(2)
         )
         self.layer2 = nn.Sequential(
             # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
             nn.Conv2d(16, 16, 3, stride = 1),
-            nn.BatchNorm2d(16),
+#             nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
