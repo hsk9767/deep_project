@@ -38,7 +38,7 @@ import torch.nn as nn
 ## cnn kernel 을 모두 3 size 로. -> 7m33s, acc : 96.6%
 ## 97%나오던거 batch 5 로 하니까 걸린 시간 : 3m57s, acc : 0.9374 % 
 ## batch normalization 추가해 보겠음. 걸린 시간 : 3m57s, acc : 0.9384 %
-##batch size 를 3으로 해 보겠음.
+##batch size 를 3으로 해 보겠음. 걸린 시간 : 4m28s , acc : 0.936 %
 
 class convnet(nn.Module):
     def __init__(self):
@@ -46,11 +46,11 @@ class convnet(nn.Module):
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
             nn.Conv2d(1,64,5, stride = 1),
-            nn.BatchNorm2d(64),
+#             nn.BatchNorm2d(64),
             nn.ReLU(),
 #             nn.MaxPool2d(2)
             nn.Conv2d(64, 64, 3, stride = 1),
-            nn.BatchNorm2d(64),
+#             nn.BatchNorm2d(64),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
