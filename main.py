@@ -43,17 +43,16 @@ for epoch in range(num_epochs):
         loss.backward()
         optimizer.step()
         
-        losses.append(loss.item())
+        losses.append(float(loss.item()))
 
         if i%50 == 0:
             print(f"loss for {i} : {loss}")
+        duration = end - start
+        print("걸린 시간 : {}m{}s".format(int(duration//60), int(duration%60)))
+        
 
 end = time.time()
 plt.plot(losses)
-print(losses)
-print(losses.dtype)
-duration = end - start
-print("걸린 시간 : {}m{}s".format(int(duration//60), int(duration%60)))
 
 # Test after Training is done
 with torch.no_grad():
@@ -67,8 +66,7 @@ with torch.no_grad():
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 
-
-    print(f"acc : {correct} / 5000")
+    print(f"acc : {} %" .format(correct / 5000))
 
 
 
