@@ -50,6 +50,8 @@ for epoch in range(num_epochs):
 
 end = time.time()
 plt.plot(losses)
+print(losses)
+print(losses.dtype)
 duration = end - start
 print("걸린 시간 : {}m{}s".format(int(duration//60), int(duration%60)))
 
