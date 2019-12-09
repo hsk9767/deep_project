@@ -30,6 +30,8 @@ import torch.nn as nn
 ##cnn 풀력 16, 32 인데 두 번째는 kernel size 3, fc 출력 120 , 50, 2 epoch .. 걸린 시간 : 6m13s, acc : 4625 / 5000, lr = 0.0001
 ##위에랑 똑같은데 fc out 을 150 / 50 으로 바꿔보기 .. 걸린 시간 : 6m19s , acc : 4602 / 5000
 ##그럼 fc layer 를 바로 50으로 뽑기 -> bottleneck 현상으로 underfit
+##12.08
+##CNN (16,16) -> 2번째 cnn 에서만 maxpooling , 두 번째 kernel만 size  3, fc layer 는 (2048, 50) , normalize 반전은 유지, lr = 0.0001, decay = 1e-5 ->
 
 class convnet(nn.Module):
     def __init__(self):
@@ -37,14 +39,14 @@ class convnet(nn.Module):
         self.layer1 = nn.Sequential(
             # nn.Conv2d(1, 6, 5, stride = 1, padding = 2),
             nn.Conv2d(1,16,5, stride = 1),
-#             nn.BatchNorm2d(16),
+            nn.BatchNorm2d(16),
             nn.ReLU(),
-            nn.MaxPool2d(2)
+#             nn.MaxPool2d(2)
         )
         self.layer2 = nn.Sequential(
             # nn.Conv2d(6, 16, 5, stride = 1, padding = 2),
-            nn.Conv2d(16, 32, 3, stride = 1),
-#             nn.BatchNorm2d(32),
+            nn.Conv2d(16, 16, 3, stride = 1),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
@@ -55,7 +57,7 @@ class convnet(nn.Module):
 #             nn.MaxPool2d(2)
 #         )
         self.layer4 = nn.Sequential(
-            nn.Linear( 6 * 6 * 32, 50),
+            nn.Linear( 13 * 13 * 16, 2048),
             nn.ReLU()
         )
 #         self.layer5 = nn.Sequential(
@@ -64,15 +66,15 @@ class convnet(nn.Module):
 #         )
         self.layer6 = nn.Sequential(
             # nn.Dropout(0.3),
-            nn.Linear(150, 50)
+            nn.Linear(2048, 50)
         )
 
     def forward(self, x):
         x = self.layer1(x)
         x = self.layer2(x)
 #         x = self.layer3(x)
-        x = x.view(-1, 6 * 6 * 32)
+        x = x.view(-1, 13 * 13 * 16)
         x = self.layer4(x)
 #         x = self.layer5(x)
-#         return self.layer6(x)
-        return x
+        return self.layer6(x)
+
