@@ -66,7 +66,7 @@ with torch.no_grad():
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 
-    print(f"acc : {} %" .format(correct / 5000))
+    print("acc : {} %" .format(correct / 5000))
 
 
 
